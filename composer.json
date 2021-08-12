@@ -1,0 +1,16 @@
+{
+    "name": "twill/simple-mvc",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./",
+            "Twill\\SimpleMvc\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "twill",
+            "email": "twill1@gmx.com"
+        }
+    ],
+    "require": {}
+}

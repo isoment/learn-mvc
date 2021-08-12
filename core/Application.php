@@ -1,5 +1,12 @@
 <?php
 
+namespace app\core;
+
+/**
+ *  Class Application
+ * 
+ *  @package app\core
+ */
 class Application 
 {
     public Router $router;
