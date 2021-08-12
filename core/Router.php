@@ -28,11 +28,26 @@ class Router
     }
 
     /**
-     *  We need to determine the current path and the current method,
-     *  based on this we execute the callback and output the results.
+     *  Get the path, request method and the callback
      */
     public function resolve()
     {
-        $this->request->getPath();
+        $path = $this->request->getPath();
+
+        $method = $this->request->getMethod();
+
+        // Find the given callback in the routes array above
+        // or set it to false.
+        $callback = $this->routes[$method][$path] ?? false;
+
+        // If there is no callback then there is no route for
+        // for what was entered.
+        if ($callback === false) {
+            echo "Not found";
+            exit;
+        }
+
+        // Execute the callback
+        echo call_user_func($callback);
     }
 }

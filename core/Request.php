@@ -20,11 +20,17 @@ class Request
         // Find the position of the ? if present
         $position = strpos($path, '?');
 
-        var_dump($position);
+        // If there is no ? we can return the path as is
+        if ($position === false) {
+            return $path;
+        }
+
+        // Return everything in the string before the postion
+        return substr($path, 0, $position);
     }
 
     public function getMethod()
     {
-
+        return strtolower($_SERVER['REQUEST_METHOD']);
     }
 }
