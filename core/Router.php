@@ -28,6 +28,14 @@ class Router
     }
 
     /**
+     *  A post request for a route
+     */
+    public function post($path, $callback)
+    {
+        $this->routes['post'][$path] = $callback;
+    }
+
+    /**
      *  Resolve the route, to do this we need to get the path. method
      *  and then determine if a callback or string referencing a view is
      *  passed in.
@@ -44,7 +52,7 @@ class Router
 
         if ($callback === false) {
             $this->response->setStatusCode(404);
-            return "Not found";
+            return $this->renderView("_404");
         }
 
         if (is_string($callback)) {
@@ -63,6 +71,16 @@ class Router
         $layoutContent = $this->layoutContent();
 
         $viewContent = $this->renderOnlyView($view);
+
+        return str_replace('{{content}}', $viewContent, $layoutContent);
+    }
+
+    /**
+     *  Render a view
+     */
+    public function renderContent($viewContent)
+    {
+        $layoutContent = $this->layoutContent();
 
         return str_replace('{{content}}', $viewContent, $layoutContent);
     }

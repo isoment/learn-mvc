@@ -19,6 +19,7 @@ class Application
     {
         // Instead of $this we can refer to static properties with self:: 
         self::$ROOT_DIR = $rootPath;
+        // We want the option to call methods from Application class anywhere
         self::$app = $this;
         $this->request = new Request();
         $this->response = new Response();
