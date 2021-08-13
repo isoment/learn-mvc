@@ -1,0 +1,3 @@
+# Ignore everything except this file, will push an empty directory.
+*
+!.gitignore

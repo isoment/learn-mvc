@@ -28,7 +28,9 @@ class Router
     }
 
     /**
-     *  Get the path, request method and the callback
+     *  Resolve the route, to do this we need to get the path. method
+     *  and then determine if a callback or string referencing a view is
+     *  passed in.
      */
     public function resolve()
     {
@@ -40,14 +42,23 @@ class Router
         // or set it to false.
         $callback = $this->routes[$method][$path] ?? false;
 
-        // If there is no callback then there is no route for
-        // for what was entered.
         if ($callback === false) {
-            echo "Not found";
-            exit;
+            return "Not found";
+        }
+
+        if (is_string($callback)) {
+            return $this->renderView($callback);
         }
 
         // Execute the callback
-        echo call_user_func($callback);
+        return call_user_func($callback);
+    }
+
+    /**
+     *  Renter a view
+     */
+    public function renderView($view)
+    {
+        include_once __DIR__ . "/../views/$view.php";
     }
 }
