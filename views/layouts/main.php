@@ -14,7 +14,7 @@
         </div>
         <div class="flex items-center">
             <a href="/contact" class="mr-4 font-mono font-bold text-sm tracking-widest">Contact</a>
-            <a href="" class="mr-4 font-mono font-bold text-sm tracking-widest">About</a>
+            <a href="/about" class="mr-4 font-mono font-bold text-sm tracking-widest">About</a>
             <a href="" class="font-mono font-bold text-sm tracking-widest">Links</a>
         </div>
     </nav>

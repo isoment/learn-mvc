@@ -2,11 +2,6 @@
 
 namespace app\core;
 
-/**
- *  Router
- * 
- *  @package app\core
- */
 class Router
 {
     public Request $request;
@@ -50,27 +45,30 @@ class Router
         // or set it to false.
         $callback = $this->routes[$method][$path] ?? false;
 
+        // If there is no route defined...
         if ($callback === false) {
             $this->response->setStatusCode(404);
             return $this->renderView("_404");
         }
 
+        // If there is a view for the argument...
         if (is_string($callback)) {
             return $this->renderView($callback);
         }
 
-        // Execute the callback
+        // Execute the callback or if it is an array [Sample::class, 'method']
+        // will try to execute the method on the Object.
         return call_user_func($callback);
     }
 
     /**
      *  Render a view
      */
-    public function renderView($view)
+    public function renderView($view, $params = [])
     {
         $layoutContent = $this->layoutContent();
 
-        $viewContent = $this->renderOnlyView($view);
+        $viewContent = $this->renderOnlyView($view, $params);
 
         return str_replace('{{content}}', $viewContent, $layoutContent);
     }
@@ -97,8 +95,15 @@ class Router
         return ob_get_clean();
     }
 
-    protected function renderOnlyView($view)
+    /**
+     *  Render only view
+     */
+    protected function renderOnlyView($view, $params)
     {
+        foreach ($params as $key => $value) {
+            $$key = $value;
+        }
+
         ob_start();
 
         include_once Application::$ROOT_DIR . "/views/$view.php";

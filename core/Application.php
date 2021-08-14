@@ -2,11 +2,6 @@
 
 namespace app\core;
 
-/**
- *  Class Application
- * 
- *  @package app\core
- */
 class Application 
 {
     public static string $ROOT_DIR;
