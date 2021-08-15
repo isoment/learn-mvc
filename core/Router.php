@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\core;
 
@@ -16,16 +17,22 @@ class Router
 
     /**
      *  A get request for a route
+     * 
+     *  @param string $path
+     *  @param mixed $callback
      */
-    public function get($path, $callback)
+    public function get(string $path, mixed $callback)
     {
         $this->routes['get'][$path] = $callback;
     }
 
     /**
      *  A post request for a route
+     * 
+     *  @param string $path
+     *  @param mixed $callback
      */
-    public function post($path, $callback)
+    public function post(string $path, mixed $callback)
     {
         $this->routes['post'][$path] = $callback;
     }
@@ -56,15 +63,27 @@ class Router
             return $this->renderView($callback);
         }
 
-        // Execute the callback or if it is an array [Sample::class, 'method']
-        // will try to execute the method on the Object.
+        // If an array [Sample::class, 'method'], the first element will be a string,
+        // Instantiate it and reassign back to the $callback array.
+        if (is_array($callback)) {
+            $instance = new $callback[0];
+            $callback[0] = $instance;
+        }
+
+        // Execute the callback function or if it is an array [Sample::class, 'method']
+        // will try to execute the method defined int the object.
         return call_user_func($callback);
     }
 
     /**
      *  Render a view
+     * 
+     *  @param string $view
+     *  @param array $params
+     * 
+     *  @return string
      */
-    public function renderView($view, $params = [])
+    public function renderView(string $view, array $params = []) : string
     {
         $layoutContent = $this->layoutContent();
 
@@ -76,17 +95,19 @@ class Router
     /**
      *  Render a view
      */
-    public function renderContent($viewContent)
-    {
-        $layoutContent = $this->layoutContent();
+    // public function renderContent($viewContent)
+    // {
+    //     $layoutContent = $this->layoutContent();
 
-        return str_replace('{{content}}', $viewContent, $layoutContent);
-    }
+    //     return str_replace('{{content}}', $viewContent, $layoutContent);
+    // }
 
     /**
      *  Layout content method
+     * 
+     *  @return string
      */
-    protected function layoutContent()
+    protected function layoutContent() : string
     {
         ob_start();
 
@@ -97,9 +118,16 @@ class Router
 
     /**
      *  Render only view
+     * 
+     *  @param string $view
+     *  @param array $params
+     * 
+     *  @return string
      */
-    protected function renderOnlyView($view, $params)
+    protected function renderOnlyView(string $view, array $params) : string
     {
+        // For each parameter we pass we are creating a new
+        // variable named $key using $$ that is passed into the view
         foreach ($params as $key => $value) {
             $$key = $value;
         }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\core;
 
@@ -6,8 +7,10 @@ class Request
 {
     /**
      *  A method to get the URI Path.
+     * 
+     *  @return string
      */
-    public function getPath()
+    public function getPath() : string
     {
         // Get the URI path if present or '/'
         $path = $_SERVER['REQUEST_URI'] ?? '/';
@@ -24,7 +27,12 @@ class Request
         return substr($path, 0, $position);
     }
 
-    public function getMethod()
+    /**
+     *  The method type of the request
+     * 
+     *  @return string
+     */
+    public function getMethod() : string
     {
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
