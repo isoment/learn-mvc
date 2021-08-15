@@ -12,7 +12,7 @@
 				</label>
 				<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight 
 							  focus:outline-none focus:shadow-outline" 
-					   id="subject" type="text" placeholder="subject">
+					   name="subject" type="text" placeholder="subject">
 			</div>
 			<div class="mb-4">
 				<label class="block text-gray-700 text-sm font-bold mb-2" for="email">
@@ -20,7 +20,7 @@
 				</label>
 				<input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight 
 							  focus:outline-none focus:shadow-outline" 
-					   id="email" type="text" placeholder="email">
+					   name="email" type="text" placeholder="email">
 			</div>
 			<div class="mb-4">
 				<label class="block text-gray-700 text-sm font-bold mb-2" for="body">
@@ -29,8 +29,7 @@
 				<textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight 
 							  focus:outline-none focus:shadow-outline" 
 					   name="body"
-					   rows="6">
-				</textarea>
+					   rows="6"></textarea>
 			</div>
 			<div class="flex justify-center">
 				<button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 

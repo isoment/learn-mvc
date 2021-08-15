@@ -70,9 +70,9 @@ class Router
             $callback[0] = $instance;
         }
 
-        // Execute the callback function or if it is an array [Sample::class, 'method']
-        // will try to execute the method defined int the object.
-        return call_user_func($callback);
+        // Execute the callback function or if it is an array [SiteController::class, 'home']
+        // will try to execute the defined controller action. Also pass in the request.
+        return call_user_func($callback, $this->request);
     }
 
     /**
