@@ -46,7 +46,7 @@ class Router
     {
         $path = $this->request->getPath();
 
-        $method = $this->request->getMethod();
+        $method = $this->request->method();
 
         // Find the given callback in the routes array above
         // or set it to false.
@@ -71,7 +71,8 @@ class Router
         }
 
         // Execute the callback function or if it is an array [SiteController::class, 'home']
-        // will try to execute the defined controller action. Also pass in the request.
+        // will try to execute the defined controller action. Also pass in the request so it is
+        // available as a parameter in controller actions (methods) when needed.
         return call_user_func($callback, $this->request);
     }
 

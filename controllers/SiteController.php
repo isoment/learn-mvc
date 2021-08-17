@@ -1,14 +1,19 @@
 <?php
+declare(strict_types=1);
 
 namespace app\controllers;
 
-use app\core\Application;
 use app\core\Controller;
 use app\core\Request;
 
 class SiteController extends Controller
 {   
-    public function home()
+    /**
+     *  Action for the home view
+     * 
+     *  @return string
+     */
+    public function home() : string
     {
         $params = [
             'name' => 'Random User'
@@ -17,12 +22,20 @@ class SiteController extends Controller
         return $this->render('home', $params);
     }
 
-    public function contact()
+    /**
+     *  Action for the contact view
+     * 
+     *  @return string
+     */
+    public function contact() : string
     {
         return $this->render('contact');
     }
 
-    public static function handleContact(Request $request)
+    /**
+     *  @param app\core\Request $request
+     */
+    public static function handleContact(Request $request) : string
     {
         $body = $request->getBody();
 

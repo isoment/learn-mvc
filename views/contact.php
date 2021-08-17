@@ -1,6 +1,3 @@
-<!-- <div class="my-4 mx-4">
-        <h1 class="text-2xl font-bold font-mono text-gray-800">Contact Us</h1>
-</div> -->
 <div class="flex justify-center mt-12 font-mono">
 	<div class="w-full max-w-sm">
 		<h1 class="text-2xl font-bold text-gray-800 mb-3">Contact Us</h1>
@@ -39,8 +36,8 @@
 				</button>
 			</div>
 		</form>
-	<p class="text-center text-gray-500 text-xs">
-		Simple MVC.
-	</p>
-</div>
+		<p class="text-center text-gray-500 text-xs">
+			Simple MVC.
+		</p>
+	</div>
 </div>
