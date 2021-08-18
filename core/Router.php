@@ -67,7 +67,8 @@ class Router
         // Instantiate it and reassign back to the $callback array.
         if (is_array($callback)) {
             $instance = new $callback[0];
-            $callback[0] = $instance;
+            Application::$app->controller = $instance;
+            $callback[0] = Application::$app->controller;
         }
 
         // Execute the callback function or if it is an array [SiteController::class, 'home']
@@ -94,25 +95,17 @@ class Router
     }
 
     /**
-     *  Render a view
-     */
-    // public function renderContent($viewContent)
-    // {
-    //     $layoutContent = $this->layoutContent();
-
-    //     return str_replace('{{content}}', $viewContent, $layoutContent);
-    // }
-
-    /**
      *  Layout content method
      * 
      *  @return string
      */
     protected function layoutContent() : string
     {
+        $layout = Application::$app->controller->layout;
+
         ob_start();
 
-        include_once Application::$ROOT_DIR . "/views/layouts/main.php";
+        include_once Application::$ROOT_DIR . "/views/layouts/$layout.php";
 
         return ob_get_clean();
     }

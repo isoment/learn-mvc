@@ -16,6 +16,8 @@ class AuthController extends Controller
      */
     public function login(Request $request) : string
     {
+        $this->setLayout('auth');
+
         return $this->render('login');
     }
 
@@ -31,6 +33,8 @@ class AuthController extends Controller
             var_dump($request->getBody());
             return 'Handle submitted data';
         }
+
+        $this->setLayout('auth');
 
         return $this->render('register');
     }
