@@ -16,7 +16,7 @@ abstract class Model
     /**
      *  Store all the validation errors
      */
-    public array $errors;
+    public array $errors = [];
 
     /**
      *  Load the data passed from the controller and assign it

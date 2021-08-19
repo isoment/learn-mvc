@@ -7,8 +7,8 @@
 			<?php echo $form->field($model, 'firstName') ?>
 			<?php echo $form->field($model, 'lastName') ?>
 			<?php echo $form->field($model, 'email') ?>
-			<?php echo $form->field($model, 'password') ?>
-			<?php echo $form->field($model, 'passwordConfirm') ?>
+			<?php echo $form->field($model, 'password')->passwordField() ?>
+			<?php echo $form->field($model, 'passwordConfirm')->passwordField() ?>
 
 			<div class="flex justify-center">
 				<button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 
