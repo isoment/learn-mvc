@@ -125,4 +125,26 @@ abstract class Model
             self::RULE_MATCH => 'Field must be the same as {match}',
         ];
     }
+
+    /**
+     *  Determine if there are errors for a given attribute
+     * 
+     *  @param string $attribute
+     *  @return mixed
+     */
+    public function hasError(string $attribute) : mixed
+    {
+        return $this->errors[$attribute] ?? false;
+    }
+
+    /**
+     *  Get the first error message
+     * 
+     *  @param string $attribute
+     *  @return mixed
+     */
+    public function getFirstError(string $attribute) : mixed
+    {
+        return $this->errors[$attribute][0] ?? false;
+    }
 }
