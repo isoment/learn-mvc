@@ -19,7 +19,8 @@ abstract class Model
     public array $errors;
 
     /**
-     *  Load the data passed from the controller
+     *  Load the data passed from the controller and assign it
+     *  to model properties if they exist.
      * 
      *  @param array $data
      */
@@ -56,12 +57,30 @@ abstract class Model
             foreach ($rules as $rule) {
                 $ruleName = $rule;
 
+                // If the rule name is an array.. ie [self::RULE_MIN, 'min' => 1]
+                // only get the first element, the name.
                 if (!is_string($ruleName)) {
                     $ruleName = $rule[0];
                 }
 
                 if ($ruleName === self::RULE_REQUIRED && !$value) {
                     $this->addError($attribute, self::RULE_REQUIRED);
+                }
+
+                if ($ruleName === self::RULE_EMAIL && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                    $this->addError($attribute, self::RULE_EMAIL);
+                }
+
+                if ($ruleName === self::RULE_MIN && strlen($value) < $rule['min']) {
+                    $this->addError($attribute, self::RULE_MIN, $rule);
+                }
+
+                if ($ruleName === self::RULE_MAX && strlen($value) > $rule['max']) {
+                    $this->addError($attribute, self::RULE_MAX, $rule);
+                }
+
+                if ($ruleName === self::RULE_MATCH && $value !== $this->{$rule['match']}) {
+                    $this->addError($attribute, self::RULE_MATCH, $rule);
                 }
             }
         }
@@ -74,12 +93,20 @@ abstract class Model
      * 
      *  @param string $attribute
      *  @param string $rule
+     *  @param array $params
      */
-    public function addError(string $attribute, string $rule)
+    public function addError(string $attribute, string $rule, array $params = [])
     {
         // If there is a rule
         $message = $this->errorMessages()[$rule] ?? '';
 
+        // If there are parameters, ie $param = ['min' => 8]
+        // replace the {} in message with the value in the parameter
+        foreach($params as $key => $value) {
+            $message = str_replace("{{$key}}", $value, $message);
+        }
+
+        // Populate the errors property with messages
         $this->errors[$attribute][] = $message;
     }
 
