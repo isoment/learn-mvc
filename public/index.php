@@ -6,7 +6,20 @@ use app\controllers\SiteController;
 use app\controllers\AuthController;
 use app\core\Application;
 
-$app = new Application(dirname(__DIR__));
+// Loading the .env file
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
+
+// Can access the .env file values using $_ENV superglobal
+$config = [
+    'db' => [
+        'dsn' => $_ENV['DB_DSN'],
+        'user' => $_ENV['DB_USER'],
+        'password' => $_ENV['DB_PASSWORD'],
+    ]
+];
+
+$app = new Application(dirname(__DIR__), $config);
 
 /**
  *  Routes

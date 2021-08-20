@@ -11,8 +11,9 @@ class Application
     public Response $response;
     public static Application $app;
     public Controller $controller;
+    public Database $database;
 
-    public function __construct($rootPath)
+    public function __construct($rootPath, array $config)
     {
         // Instead of $this we can refer to static properties with self:: 
         self::$ROOT_DIR = $rootPath;
@@ -24,6 +25,7 @@ class Application
         // Initialize to prevent error when accessing route with just a string param
         // referencing a view.
         $this->controller = new Controller();
+        $this->database = new Database($config['db']);
     }
 
     /**

@@ -12,5 +12,7 @@
             "email": "twill1@gmx.com"
         }
     ],
-    "require": {}
+    "require": {
+        "vlucas/phpdotenv": "^5.3"
+    }
 }
