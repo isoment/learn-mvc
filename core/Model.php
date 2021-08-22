@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\core;
 
@@ -103,7 +104,7 @@ abstract class Model
         // If there are parameters, ie $param = ['min' => 8]
         // replace the {} in message with the value in the parameter
         foreach($params as $key => $value) {
-            $message = str_replace("{{$key}}", $value, $message);
+            $message = str_replace("{{$key}}", (string) $value, $message);
         }
 
         // Populate the errors property with messages

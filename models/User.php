@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models;
 
-use app\core\Model;
+use app\core\DbModel;
 
-class RegisterModel extends Model
+class User extends DbModel
 {
     public string $firstName = '';
     public string $lastName = '';
@@ -12,11 +13,29 @@ class RegisterModel extends Model
     public string $password = '';
     public string $passwordConfirm = '';
 
-    public function register()
+    /**
+     *  Specify the table name we are using
+     * 
+     *  @return string
+     */
+    public function tableName(): string
     {
-        echo "Creating new user";
+        return 'users';
     }
 
+    /**
+     *  Register a user
+     */
+    public function register()
+    {
+        return $this->save();
+    }
+
+    /**
+     *  The rules we want to use for the model
+     * 
+     *  @return array
+     */
     public function rules(): array
     {
         return [
@@ -33,5 +52,15 @@ class RegisterModel extends Model
                 [self::RULE_MATCH, 'match' => 'password']
             ],
         ];
+    }
+
+    /**
+     *  The model attributes we want to persist in the database
+     * 
+     *  @return array
+     */
+    public function attributes(): array
+    {
+        return ['firstName', 'lastName', 'email', 'password'];
     }
 }
