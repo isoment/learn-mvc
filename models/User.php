@@ -7,9 +7,14 @@ use app\core\DbModel;
 
 class User extends DbModel
 {
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 2;
+
     public string $firstName = '';
     public string $lastName = '';
     public string $email = '';
+    public int $status = self::STATUS_INACTIVE;
     public string $password = '';
     public string $passwordConfirm = '';
 
@@ -24,11 +29,18 @@ class User extends DbModel
     }
 
     /**
-     *  Register a user
+     *  Override the save method in DbModel class
+     * 
+     *  @return boolean
      */
-    public function register()
+    public function save() : bool
     {
-        return $this->save();
+        $this->status = self::STATUS_INACTIVE;
+
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+
+        // Call the save() method in DbModel
+        return parent::save();
     }
 
     /**
@@ -61,6 +73,6 @@ class User extends DbModel
      */
     public function attributes(): array
     {
-        return ['firstName', 'lastName', 'email', 'password'];
+        return ['firstName', 'lastName', 'email', 'password', 'status'];
     }
 }

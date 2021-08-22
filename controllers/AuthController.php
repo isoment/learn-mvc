@@ -30,29 +30,29 @@ class AuthController extends Controller
      */
     public function register(Request $request) : string
     {
-        $registerModel = new User;
+        $user = new User;
 
         if ($request->isPost()) {
         
-            $registerModel->loadData($request->getBody());
+            $user->loadData($request->getBody());
 
-            if ($registerModel->validate() && $registerModel->register()) {
+            if ($user->validate() && $user->save()) {
                 return 'Success';
             }
 
-            // var_dump($registerModel->errors);
+            // var_dump($user->errors);
 
             $this->setLayout('auth');
             
             return $this->render('register', [
-                'model' => $registerModel
+                'model' => $user
             ]);
         }
 
         $this->setLayout('auth');
 
         return $this->render('register', [
-            'model' => $registerModel
+            'model' => $user
         ]);
     }
 }
