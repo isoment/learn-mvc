@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace app\core;
 
 use PDO;
+use PDOStatement;
 
 class Database
 {
@@ -104,6 +105,17 @@ class Database
         $statement = $this->pdo->prepare("INSERT INTO migrations (migration) VALUES $str");
 
         $statement->execute();
+    }
+
+    /**
+     *  Prepare an SQL statement
+     * 
+     *  @param string $sql
+     *  @return PDOStatement
+     */
+    public function prepare(string $sql) : PDOStatement
+    {
+        return $this->pdo->prepare($sql);
     }
 
     /**
