@@ -1,3 +1,5 @@
+<?php use app\core\Application; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +21,12 @@
             <a href="/login" class="font-bold text-sm tracking-widest">Login</a>
         </div>
     </nav>
+
+    <?php if (Application::$app->session->getFlash('success')): ?>
+        <div class="alert alert-success mx-4 my-3 px-3 py-2 border rounded-sm text-bold text-green-500 bg-green-100 border-green-500">
+            <?php echo Application::$app->session->getFlash('success') ?>
+        </div>
+    <?php endif; ?>
 
     {{content}}
 </body>
