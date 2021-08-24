@@ -19,7 +19,7 @@ class User extends DbModel
     public string $passwordConfirm = '';
 
     /**
-     *  Specify the table name we are using
+     *  Specify the table to use
      * 
      *  @return string
      */
@@ -44,7 +44,7 @@ class User extends DbModel
     }
 
     /**
-     *  The rules we want to use for the model
+     *  The rules to use for the model
      * 
      *  @return array
      */
@@ -75,12 +75,26 @@ class User extends DbModel
     }
 
     /**
-     *  The model attributes we want to persist in the database
+     *  The model attributes to persist in the database
      * 
      *  @return array
      */
     public function attributes(): array
     {
         return ['firstName', 'lastName', 'email', 'password', 'status'];
+    }
+
+    /**
+     *  The label names for the form inputs
+     */
+    public function labels() : array
+    {
+        return [
+            'firstName' => 'First Name',
+            'lastName' => 'Last Name',
+            'email' => 'Email',
+            'password' => 'Password',
+            'passwordConfirm' => 'Confirm Password'
+        ];
     }
 }
