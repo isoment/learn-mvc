@@ -10,8 +10,8 @@
 
 		<?php $form = \app\core\form\Form::begin('', 'post', 'bg-white shadow-md border rounded px-8 pt-6 pb-8 mb-4') ?>
 
-			<?php echo $form->field($model, 'firstName') ?>
-			<?php echo $form->field($model, 'lastName') ?>
+			<?php echo $form->field($model, 'firstname') ?>
+			<?php echo $form->field($model, 'lastname') ?>
 			<?php echo $form->field($model, 'email') ?>
 			<?php echo $form->field($model, 'password')->passwordField() ?>
 			<?php echo $form->field($model, 'passwordConfirm')->passwordField() ?>

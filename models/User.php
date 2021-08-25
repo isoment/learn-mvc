@@ -11,8 +11,8 @@ class User extends DbModel
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;
 
-    public string $firstName = '';
-    public string $lastName = '';
+    public string $firstname = '';
+    public string $lastname = '';
     public string $email = '';
     public int $status = self::STATUS_INACTIVE;
     public string $password = '';
@@ -23,7 +23,7 @@ class User extends DbModel
      * 
      *  @return string
      */
-    public function tableName(): string
+    public static function tableName(): string
     {
         return 'users';
     }
@@ -51,8 +51,8 @@ class User extends DbModel
     public function rules(): array
     {
         return [
-            'firstName' => [self::RULE_REQUIRED],
-            'lastName' => [self::RULE_REQUIRED],
+            'firstname' => [self::RULE_REQUIRED],
+            'lastname' => [self::RULE_REQUIRED],
             'email' => [
                 self::RULE_REQUIRED, 
                 self::RULE_EMAIL,
@@ -81,7 +81,7 @@ class User extends DbModel
      */
     public function attributes(): array
     {
-        return ['firstName', 'lastName', 'email', 'password', 'status'];
+        return ['firstname', 'lastname', 'email', 'password', 'status'];
     }
 
     /**
@@ -90,8 +90,8 @@ class User extends DbModel
     public function labels() : array
     {
         return [
-            'firstName' => 'First Name',
-            'lastName' => 'Last Name',
+            'firstname' => 'First Name',
+            'lastname' => 'Last Name',
             'email' => 'Email',
             'password' => 'Password',
             'passwordConfirm' => 'Confirm Password'

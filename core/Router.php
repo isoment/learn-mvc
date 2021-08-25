@@ -74,7 +74,7 @@ class Router
         // Execute the callback function or if it is an array [SiteController::class, 'home']
         // will try to execute the defined controller action. Also pass in the request so it is
         // available as a parameter in controller actions (methods) when needed.
-        return call_user_func($callback, $this->request);
+        return call_user_func($callback, $this->request, $this->response);
     }
 
     /**

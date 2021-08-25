@@ -17,9 +17,8 @@ class AuthController extends Controller
      * 
      *  @param app\core\Request $request
      *  @param app\core\Response $response
-     *  @return string
      */
-    public function login(Request $request, Response $response) : string
+    public function login(Request $request, Response $response)
     {
         $loginForm = new LoginForm;
 
@@ -28,14 +27,16 @@ class AuthController extends Controller
 
             if ($loginForm->validate() && $loginForm->login()) {
                 $response->redirect('/');
-                
+
                 return;
             }
         }
 
         $this->setLayout('auth');
 
-        return $this->render('login');
+        return $this->render('login', [
+            'model' => $loginForm
+        ]);
     }
 
     /**
@@ -57,7 +58,7 @@ class AuthController extends Controller
 
                 Application::$app->response->redirect('/');
 
-                exit;
+                return 'Show success page';
             }
 
             // var_dump($user->errors);

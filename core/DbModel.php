@@ -7,7 +7,7 @@ use PDOStatement;
 
 abstract class DbModel extends Model
 {
-    abstract public function tableName() : string;
+    abstract public static function tableName() : string;
 
     abstract public function attributes() : array;
 
@@ -46,11 +46,40 @@ abstract class DbModel extends Model
     }
 
     /**
+     *  Find a database record
+     * 
+     *  @param array $where
+     *  @return mixed
+     */
+    public static function findOne(array $where) : mixed
+    {
+        $tableName = static::tableName();
+
+        // Get just the keys ['email' => test@test.comm, 'firstName' => 'fred'] etc...
+        $attributes = array_keys($where);
+
+        // Need an SQL statement... SELECT * FROM $tablename WHERE email = :email AND firstName = :firstName
+        // Use this to prepare the statement
+        $sql = implode("AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+
+        $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
+
+        foreach ($where as $key => $item) {
+            $statement->bindValue(":$key", $item);
+        }
+
+        $statement->execute();
+
+        return $statement->fetchObject(static::class);
+    }
+
+    /**
      *  Prepare a SQL statement
      * 
+     *  @param string
      *  @return PDOStatement
      */
-    public static function prepare($sql) : PDOStatement
+    public static function prepare(string $sql) : PDOStatement
     {
         return Application::$app->database->pdo->prepare($sql);
     }
