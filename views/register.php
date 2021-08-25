@@ -1,3 +1,9 @@
+<?php 
+/**
+ *  @var $model \app\models\User
+ */
+?>
+
 <div class="flex justify-center mt-12 font-mono">
 	<div class="w-full max-w-sm">
 		<h1 class="text-2xl font-bold text-gray-800 mb-3">Register</h1>
