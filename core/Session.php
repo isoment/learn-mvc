@@ -50,6 +50,37 @@ class Session
     }
 
     /**
+     *  Set the session information
+     * 
+     *  @param string $key
+     *  @param string $value
+     */
+    public function set($key, $value)
+    {
+        $_SESSION[$key] = $value;
+    }
+
+    /**
+     *  Get the session information by key
+     * 
+     *  @param string $key
+     */
+    public function get($key)
+    {
+        return $_SESSION[$key] ?? false;
+    }
+
+    /**
+     *  Remove information from session by key
+     *  
+     *  @param string $key
+     */
+    public function remove($key)
+    {
+        unset($_SESSION[$key]);
+    }
+
+    /**
      *  Destructor is called when the object is destroyed
      */
     public function __destruct()

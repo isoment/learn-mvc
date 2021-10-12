@@ -23,9 +23,17 @@ class User extends DbModel
      * 
      *  @return string
      */
-    public static function tableName(): string
+    public static function tableName() : string
     {
         return 'users';
+    }
+
+    /**
+     *  Get the primary key
+     */
+    public static function primaryKey() : string
+    {
+        return 'id';
     }
 
     /**

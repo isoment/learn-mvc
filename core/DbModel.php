@@ -11,6 +11,8 @@ abstract class DbModel extends Model
 
     abstract public function attributes() : array;
 
+    abstract public static function primaryKey() : string;
+
     /**
      *  Take the model attributes and save in the database
      */
@@ -70,6 +72,8 @@ abstract class DbModel extends Model
 
         $statement->execute();
 
+        // By passing in static::class fetchObject will return an instance of the object on which it
+        // is called. When we call it on LoginForm.php from the User model it will return an instance of that.
         return $statement->fetchObject(static::class);
     }
 

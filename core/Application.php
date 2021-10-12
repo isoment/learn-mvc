@@ -13,9 +13,15 @@ class Application
     public static Application $app;
     public Controller $controller;
     public Database $database;
+    // The ? indicates this might be null
+    public ?DbModel $user;
+    public string $userClass;
 
     public function __construct($rootPath, array $config)
     {
+        // Set the user class for the application, don't want to reference User class here
+        // since it's outside the core. Pass it in from config in index.php.
+        $this->userClass = $config['userClass'];
         // Instead of $this we can refer to static properties with self:: 
         self::$ROOT_DIR = $rootPath;
         // We want the option to call methods from Application class anywhere
@@ -28,6 +34,16 @@ class Application
         // referencing a view.
         $this->controller = new Controller();
         $this->database = new Database($config['db']);
+
+        $primaryValue = $this->session->get('user');
+
+        // If there is a user set in session...
+        if ($primaryValue) {
+            $primaryKey = $this->userClass::primaryKey();
+            $this->user = $this->userClass::findOne([$primaryKey => $primaryValue]);
+        } else {
+            $this->user = null;
+        }
     }
 
     /**
@@ -56,5 +72,34 @@ class Application
     public function setController(Controller $controller) : void
     {
         $this->controller = $controller;
+    }
+
+    /**
+     *  Login user
+     * 
+     *  @param \app\core\DbModel
+     */
+    public function login(DbModel $user)
+    {
+        $this->user = $user;
+
+        $primaryKey = $user->primaryKey();
+
+        // $user->id is the result if the primary key column is id
+        $primaryValue = $user->{$primaryKey};
+
+        $this->session->set('user', $primaryValue);
+
+        return true;
+    }
+
+    /**
+     *  Logout user
+     */
+    public function logout()
+    {
+        $this->user = null;
+
+        $this->session->remove('user');
     }
 }
