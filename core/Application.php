@@ -47,6 +47,14 @@ class Application
     }
 
     /**
+     *  Check if the user doesn't exist
+     */
+    public static function isGuest()
+    {
+        return ! self::$app->user;
+    }
+
+    /**
      *  Run the application
      */
     public function run()

@@ -2,10 +2,6 @@
 
 use app\core\Application;
 
-echo '<pre>';
-var_dump(Application::$app->user);
-echo '</pre>';
-
 ?>
 
 <!DOCTYPE html>
@@ -25,8 +21,18 @@ echo '</pre>';
         <div class="flex items-center">
             <a href="/contact" class="mr-4 font-bold text-sm tracking-widest">Contact</a>
             <a href="/about" class="mr-4 font-bold text-sm tracking-widest">About</a>
-            <a href="/register" class="mr-4 font-bold text-sm tracking-widest">Register</a>
-            <a href="/login" class="font-bold text-sm tracking-widest">Login</a>
+            <?php if (Application::isGuest()): ?>
+                <div>
+                    <a href="/register" class="mr-4 font-bold text-sm tracking-widest">Register</a>
+                    <a href="/login" class="font-bold text-sm tracking-widest">Login</a>
+                </div>
+            <?php else: ?>
+                <div class="ml-2 text-red-500">
+                    <a class="font-bold text-sm tracking-widest" href="/logout">
+                        Logout
+                    </a>
+                </div>
+            <?php endif; ?>
         </div>
     </nav>
 
