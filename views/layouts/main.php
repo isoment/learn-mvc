@@ -15,12 +15,14 @@ use app\core\Application;
 </head>
 <body>
     <nav class="px-4 py-3 flex items-center justify-between border-b font-mono">
-        <div>
-            <a href="/" class="text-green-400 font-bold">SimpleMVC</a>
+        <div class="flex">
+            <a href="/" class="text-green-400 font-bold text-xl">SimpleMVC</a>
+            <div class="ml-6 flex items-center">
+                <a href="/contact" class="mr-4 font-bold text-sm tracking-widest">Contact</a>
+                <a href="/about" class="mr-4 font-bold text-sm tracking-widest">About</a>
+            </div>
         </div>
         <div class="flex items-center">
-            <a href="/contact" class="mr-4 font-bold text-sm tracking-widest">Contact</a>
-            <a href="/about" class="mr-4 font-bold text-sm tracking-widest">About</a>
             <?php if (Application::isGuest()): ?>
                 <div>
                     <a href="/register" class="mr-4 font-bold text-sm tracking-widest">Register</a>
@@ -29,7 +31,7 @@ use app\core\Application;
             <?php else: ?>
                 <div class="ml-2 text-red-500">
                     <a class="font-bold text-sm tracking-widest" href="/logout">
-                        Logout
+                        Logout <?php echo Application::$app->user->getDisplayName() ?>
                     </a>
                 </div>
             <?php endif; ?>

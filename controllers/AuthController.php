@@ -13,8 +13,6 @@ use app\models\User;
 class AuthController extends Controller
 {
     /**
-     *  Login action
-     * 
      *  @param app\core\Request $request
      *  @param app\core\Response $response
      */
@@ -40,8 +38,6 @@ class AuthController extends Controller
     }
 
     /**
-     *  Register action
-     * 
      *  @param app\core\Request $request
      *  @return string
      */
@@ -75,5 +71,15 @@ class AuthController extends Controller
         return $this->render('register', [
             'model' => $user
         ]);
+    }
+
+    /**
+     *  @param Request $request
+     *  @param Response $response
+     */
+    public function logout(Request $request, Response $response)
+    {
+        Application::$app->logout();
+        $response->redirect('/');
     }
 }
