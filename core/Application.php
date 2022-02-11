@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace app\core;
 
+use Exception;
+
 class Application 
 {
     public static string $ROOT_DIR;
@@ -11,11 +13,12 @@ class Application
     public Session $session;
     public Response $response;
     public static Application $app;
-    public Controller $controller;
+    public ?Controller $controller = null;
     public Database $database;
     // The ? indicates this might be null
     public ?DbModel $user;
     public string $userClass;
+    public string $layout = 'main';
 
     public function __construct($rootPath, array $config)
     {
@@ -59,7 +62,14 @@ class Application
      */
     public function run()
     {
-        echo $this->router->resolve();
+        try {
+            echo $this->router->resolve();
+        } catch (Exception $e) {
+            $this->response->setStatusCode($e->getCode());
+            echo $this->router->renderView('_error', [
+                'exception' => $e
+            ]);
+        }
     }
 
     /**

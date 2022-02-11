@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace app\core;
 
+use app\core\exception\NotFoundException;
+
 class Router
 {
     public Request $request;
@@ -54,8 +56,7 @@ class Router
 
         // If there is no route defined...
         if ($callback === false) {
-            $this->response->setStatusCode(404);
-            return $this->renderView("_404");
+            throw new NotFoundException();
         }
 
         // If there is a view for the argument...
@@ -66,9 +67,14 @@ class Router
         // If an array [Sample::class, 'method'], the first element will be a string,
         // Instantiate it and reassign back to the $callback array.
         if (is_array($callback)) {
-            $instance = new $callback[0];
-            Application::$app->controller = $instance;
-            $callback[0] = Application::$app->controller;
+            $controller = new $callback[0]();
+            Application::$app->controller = $controller;
+            $controller->action = $callback[1];
+            $callback[0] = $controller;
+
+            foreach ($controller->getMiddlewares() as $middleware) {
+                $middleware->execute();
+            }
         }
 
         // Execute the callback function or if it is an array [SiteController::class, 'home']
@@ -101,7 +107,11 @@ class Router
      */
     protected function layoutContent() : string
     {
-        $layout = Application::$app->controller->layout;
+        $layout = Application::$app->layout;
+
+        if (Application::$app->controller) {
+            $layout = Application::$app->controller->layout;
+        }
 
         ob_start();
 

@@ -29,6 +29,11 @@ use app\core\Application;
                     <a href="/login" class="font-bold text-sm tracking-widest">Login</a>
                 </div>
             <?php else: ?>
+                <div class="mr-2">
+                    <a class="font-bold text-sm tracking-widest" href="/profile">
+                        Profile
+                    </a>
+                </div>
                 <div class="ml-2 text-red-500">
                     <a class="font-bold text-sm tracking-widest" href="/logout">
                         Logout <?php echo Application::$app->user->getDisplayName() ?>
